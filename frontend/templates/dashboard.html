@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAU Cyber Security and Innovations Club - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Set up Tailwind configuration to support manual class toggling
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300">
+
+    <nav class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex items-center justify-between shadow-md transition-colors duration-300">
+        <div class="flex items-center gap-3">
+            <img src="../../assets/club_logo.png" alt="Club Logo" class="h-10 w-auto dark:invert dark:brightness-200">
+            <div>
+                <span class="font-bold tracking-wide block text-sm uppercase text-slate-900 dark:text-white">Cyber Security & Innovations Club</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block uppercase tracking-wider">Office of the Head of Projects</span>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            
+            <button id="themeToggleBtn" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600/50 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-amber-400 transition-colors shadow-sm" title="Toggle Theme Mode">
+                <svg id="sunIcon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.243 17.657l.707.707M6.343 6.343l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path>
+                </svg>
+                <svg id="moonIcon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                </svg>
+            </button>
+
+            <span class="text-xs bg-blue-600/10 text-blue-600 dark:bg-blue-600/20 dark:text-blue-400 border border-blue-500/20 dark:border-blue-500/30 px-4 py-1.5 rounded-full font-mono font-bold tracking-wide">
+                User: SSALI KEVIN
+            </span>
+            
+            <a href="/logout" class="text-sm bg-rose-600 text-white hover:bg-rose-700 px-4 py-2 rounded-lg font-semibold transition-colors shadow-md shadow-rose-900/10">Log Out</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <section class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col justify-between transition-colors duration-300">
+            <div>
+                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 mb-6 flex justify-between items-start">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-wide">Generate Official Notice</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">Fill out the fields below to bake your official signed PDF document.</p>
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap justify-end">
+                        <button type="button" id="sampleNoticeBtn" class="text-xs bg-blue-600 text-white hover:bg-blue-700 px-2.5 py-1.5 rounded-md font-semibold transition-colors border border-blue-700 shadow-sm">
+                            Load Sample
+                        </button>
+                        <button type="button" id="clearFormBtn" class="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-rose-950/40 hover:text-rose-600 dark:hover:text-rose-400 px-2.5 py-1.5 rounded-md font-semibold transition-colors border border-slate-200 dark:border-slate-600">
+                            Clear Form
+                        </button>
+                    </div>
+                </div>
+
+                <form id="noticeForm" action="/generate-pdf" method="POST" target="_blank" class="space-y-5">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 text-xs font-bold mb-2 uppercase tracking-wider" for="refNumber">Reference ID</label>
+                            <input class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 font-mono transition-colors" 
+                                   type="text" id="refNumber" name="ref_number" placeholder="SLAU-CSIC-2026-1001" required>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 text-xs font-bold mb-2 uppercase tracking-wider" for="noticeDate">Notice Date</label>
+                            <input class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 font-mono transition-colors" 
+                                   type="date" id="noticeDate" name="notice_date" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 text-xs font-bold mb-2 uppercase tracking-wider" for="audience">Target Audience (TO:)</label>
+                        <input class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-colors" 
+                               type="text" id="audience" name="audience" placeholder="All Club Members / Technical Committee" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 text-xs font-bold mb-2 uppercase tracking-wider" for="subject">Subject Title</label>
+                        <input class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 font-semibold transition-colors" 
+                               type="text" id="subject" name="subject" placeholder="Urgent: Upcoming Penetration Testing Lab Session" required>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-wider" for="bodyText">Announcement Details</label>
+                            <span id="charCounter" class="text-[11px] font-mono font-bold text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800">0 / 800</span>
+                        </div>
+                        <textarea class="w-full h-44 px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-colors resize-none leading-relaxed" 
+                                  id="bodyText" name="body_text" maxlength="800" placeholder="Write your full message details, schedules, requirements, or lab locations here..." required></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-4 mt-6">
+                <button type="submit" id="submitBtn" form="noticeForm" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800/60 text-white font-bold rounded-lg shadow-lg hover:shadow-blue-500/20 disabled:shadow-none transition-all duration-200 uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                    <svg id="btnSpinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <svg id="btnIcon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span id="btnText">Bake & Open Official PDF</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col transition-colors duration-300">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4 mb-4">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-wide">Live Document Canvas</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">This matches the precise structure of your formal St. Lawrence paper output.</p>
+            </div>
+
+            <div class="bg-white text-slate-900 rounded-lg p-6 shadow-inner flex-grow min-h-[500px] border-4 border-double border-slate-300 dark:border-slate-600 flex flex-col justify-between font-serif selection:bg-blue-200">
+                
+                <div>
+                    <div class="flex items-center justify-between border-b-2 border-slate-900 pb-3 mb-4">
+                        <div class="w-20 h-20 flex-shrink-0 flex items-center justify-center">
+                            <img src="../../assets/club_logo.png" alt="Club Logo" class="w-full h-full object-contain">
+                        </div>
+                        
+                        <div class="text-center flex-grow px-2">
+                            <h3 class="text-sm font-extrabold tracking-tight uppercase leading-tight text-slate-950">Cyber Security & Innovations Club</h3>
+                            <p class="text-[10px] font-sans font-bold tracking-wider uppercase text-slate-600 mt-0.5">St. Lawrence University</p>
+                            <p class="text-[9px] font-sans font-extrabold tracking-wider uppercase text-slate-700 mt-0.5">Office of the Head of Projects</p>
+                            <p class="text-[8px] font-sans font-medium text-slate-500 lowercase mt-0.5">cybersecurity@stlawrence.ac.ug</p>
+                        </div>
+                        
+                        <div class="w-20 h-20 flex-shrink-0 flex items-center justify-center">
+                            <img src="../../assets/university_logo.png" alt="University Logo" class="w-full h-full object-contain" onerror="this.style.display='none';">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center text-[10px] font-sans font-bold text-slate-700 mb-4 px-1">
+                        <div>REF: <span id="previewRef" class="font-mono text-slate-900">SLAU-CSIC-2026-1001</span></div>
+                        <div>DATE: <span id="previewDate" class="font-mono text-slate-900">DD/MM/YYYY</span></div>
+                    </div>
+
+                    <div class="text-[11px] font-sans font-bold uppercase text-slate-800 mb-4 px-1">
+                        TO: <span id="previewAudience" class="text-slate-900 border-b border-slate-300 pb-0.5">___________________________</span>
+                    </div>
+
+                    <div class="text-center mb-5">
+                        <h4 id="previewSubject" class="text-sm font-extrabold uppercase tracking-wide inline-block border-b-2 border-slate-900 pb-0.5 px-2 text-slate-950">
+                            SUBJECT TITLE PLACEHOLDER
+                        </h4>
+                    </div>
+
+                    <div id="previewBody" class="text-xs text-slate-800 leading-relaxed whitespace-pre-wrap px-1 font-serif italic text-justify">
+                        Your announcement contents will appear laid out here dynamically as you write inside the code workspace panel on the left...
+                    </div>
+                </div>
+
+                <div class="mt-16 grid grid-cols-[1fr_auto_1fr] items-end gap-6 px-1">
+                    <div class="flex flex-col justify-end">
+                        <div class="pointer-events-none mix-blend-multiply contrast-125 brightness-110 flex justify-center">
+                            <img src="../../assets/signature.png" alt="Signature" class="h-12 w-auto object-contain max-w-[150px] block">
+                        </div>
+                        
+                        <p class="text-[9px] font-sans font-extrabold uppercase text-slate-950 tracking-wide pt-1 text-center">SSALI KEVIN</p>
+                        <p class="text-[7px] font-sans font-bold uppercase text-slate-500 tracking-wider text-center">Head of Projects</p>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-end pointer-events-none mix-blend-multiply opacity-85 contrast-125 brightness-95">
+                        <div class="relative h-20 w-20 flex items-center justify-center">
+                            <img src="../../assets/stamp.png" alt="Official Office Stamp" class="w-full h-full object-contain" style="filter: sepia(1) saturate(6) hue-rotate(180deg) brightness(0.72) contrast(1.15);">
+                            <span id="stampVerificationDate" class="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 font-sans font-black text-[7px] tracking-tight text-[#1e3a5f]/90 uppercase select-none">
+                                15 JUN 2026
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="text-right text-[8px] font-sans font-semibold tracking-widest text-slate-400 uppercase">
+                        SLAU-CSIC-SECURE
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const refInput = document.getElementById('refNumber');
+        const dateInput = document.getElementById('noticeDate');
+        const audInput = document.getElementById('audience');
+        const subInput = document.getElementById('subject');
+        const bodyInput = document.getElementById('bodyText');
+
+        const previewRef = document.getElementById('previewRef');
+        const previewDate = document.getElementById('previewDate');
+        const previewAudience = document.getElementById('previewAudience');
+        const previewSubject = document.getElementById('previewSubject');
+        const previewBody = document.getElementById('previewBody');
+        const stampDate = document.getElementById('stampVerificationDate');
+        const charCounter = document.getElementById('charCounter');
+        const sampleNoticeBtn = document.getElementById('sampleNoticeBtn');
+
+        const sampleNotice = {
+            refNumber: 'SLAU-CSIC-2026-0427',
+            noticeDate: '2026-06-20',
+            audience: 'All Club Members, Project Leads, and Technical Committee',
+            subject: 'Mandatory Cyber Hygiene Awareness Workshop',
+            body: `Dear Members,
+
+This is to inform you that the Cyber Security & Innovations Club will hold a mandatory Cyber Hygiene Awareness Workshop on Saturday, 20 June 2026, at 2:00 PM in the Main Computer Lab.
+
+Agenda:
+- Secure password practices
+- Phishing and social engineering awareness
+- Basic incident reporting procedures
+- Q&A and open discussion
+
+Attendance is expected from all active members and project leads. Kindly arrive 10 minutes early with your student ID and any pending questions.
+`
+        };
+
+        function setInputValue(input, value, eventType = 'input') {
+            input.value = value;
+            input.dispatchEvent(new Event(eventType, { bubbles: true }));
+        }
+
+        function loadSampleNotice() {
+            setInputValue(refInput, sampleNotice.refNumber);
+            setInputValue(audInput, sampleNotice.audience);
+            setInputValue(subInput, sampleNotice.subject);
+            setInputValue(bodyInput, sampleNotice.body);
+            setInputValue(dateInput, sampleNotice.noticeDate, 'change');
+        }
+
+        // Real-time text mirror bindings
+        refInput.addEventListener('input', (e) => previewRef.innerText = e.target.value || 'SLAU-CSIC-2026-1001');
+        audInput.addEventListener('input', (e) => previewAudience.innerText = e.target.value || '___________________________');
+        subInput.addEventListener('input', (e) => previewSubject.innerText = e.target.value.toUpperCase() || 'SUBJECT TITLE PLACEHOLDER');
+        
+        // NEW: Live Character Counting Engine & State feedback
+        bodyInput.addEventListener('input', (e) => {
+            const currentLength = e.target.value.length;
+            previewBody.innerText = e.target.value || 'Your announcement contents will appear laid out here dynamically...';
+            
+            // Render text string length
+            charCounter.innerText = `${currentLength} / 800`;
+
+            // Dynamic Warning colors: turn counter yellow at 700 chars, red at 780
+            if(currentLength >= 780) {
+                charCounter.className = "text-[11px] font-mono font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/30 px-2 py-0.5 rounded border border-rose-500/30";
+            } else if(currentLength >= 700) {
+                charCounter.className = "text-[11px] font-mono font-bold text-amber-500 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded border border-amber-500/30";
+            } else {
+                charCounter.className = "text-[11px] font-mono font-bold text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800";
+            }
+        });
+        
+        // Date Synchronizer Logic
+        dateInput.addEventListener('change', (e) => {
+            if(e.target.value) {
+                const dateParts = e.target.value.split('-'); 
+                const year = dateParts[0];
+                const day = dateParts[2];
+                const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                const monthText = months[parseInt(dateParts[1]) - 1];
+
+                previewDate.innerText = `${day}/${dateParts[1]}/${year}`;
+                stampDate.innerText = `${day} ${monthText} ${year}`;
+            } else {
+                previewDate.innerText = 'DD/MM/YYYY';
+                stampDate.innerText = 'NO DATE';
+            }
+        });
+
+        // Initialize Defaults on startup
+        function initializeDefaults() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            
+            dateInput.value = `${year}-${month}-${day}`;
+            previewDate.innerText = `${day}/${month}/${year}`;
+
+            const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            stampDate.innerText = `${day} ${months[today.getMonth()]} ${year}`;
+
+            const uniqueSerial = Math.floor(1000 + Math.random() * 9000); 
+            const dynamicRef = `SLAU-CSIC-${year}-${uniqueSerial}`;
+            refInput.value = dynamicRef;
+            previewRef.innerText = dynamicRef;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeDefaults();
+
+            // Setup theme state initial views
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('sunIcon').classList.remove('hidden');
+                document.getElementById('moonIcon').classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('sunIcon').classList.add('hidden');
+                document.getElementById('moonIcon').classList.remove('hidden');
+            }
+        });
+
+        // Theme Click Toggler Execution
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        });
+
+        // NEW: Form Clear Canvas Action Binding
+        document.getElementById('clearFormBtn').addEventListener('click', () => {
+            document.getElementById('noticeForm').reset();
+            initializeDefaults();
+            audInput.value = '';
+            subInput.value = '';
+            bodyInput.value = '';
+            previewAudience.innerText = '___________________________';
+            previewSubject.innerText = 'SUBJECT TITLE PLACEHOLDER';
+            previewBody.innerText = 'Your announcement contents will appear laid out here dynamically...';
+            charCounter.innerText = '0 / 800';
+            charCounter.className = "text-[11px] font-mono font-bold text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800";
+        });
+
+        sampleNoticeBtn.addEventListener('click', loadSampleNotice);
+
+        // NEW: Form Submission Interceptor to handle Loading States safely
+        document.getElementById('noticeForm').addEventListener('submit', function() {
+            const btn = document.getElementById('submitBtn');
+            const spinner = document.getElementById('btnSpinner');
+            const icon = document.getElementById('btnIcon');
+            const text = document.getElementById('btnText');
+
+            // Trigger disabled state parameters
+            btn.disabled = true;
+            icon.classList.add('hidden');
+            spinner.classList.remove('hidden');
+            text.innerText = "Baking Official PDF...";
+
+            // Restore action button state after short timeout (when PDF opens in a new tab)
+            setTimeout(() => {
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                icon.classList.remove('hidden');
+                text.innerText = "Bake & Open Official PDF";
+            }, 3000);
+        });
+    </script>
+
+</body>
+</html>
