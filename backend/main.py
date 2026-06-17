@@ -319,7 +319,7 @@ def _build_notice_pdf(
                 Paragraph(
                     "Cyber Security & Innovations Club<br/>"
                     "St. Lawrence University<br/>"
-                    "<font size='7.5'>cybersecurity@stlawrence.ac.ug</font>",
+                    "<font size='7.5'>ssalikevin515@gmail.com</font>",
                     title_style,
                 ),
                 _image_or_spacer("university_logo.png", 2.0 * cm, 2.0 * cm),
